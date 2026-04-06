@@ -18,7 +18,8 @@ namespace Bangumi.Helper
         {
             try
             {
-                string url = $"{BgmOAuth.OAuthHOST}/authorize?client_id={BangumiApi.BgmOAuth.ClientId}&response_type=code";
+                string redirectUri = Uri.EscapeDataString(BangumiApi.BgmOAuth.RedirectUrl);
+                string url = $"{BgmOAuth.OAuthHOST}/authorize?client_id={BangumiApi.BgmOAuth.ClientId}&response_type=code&redirect_uri={redirectUri}";
 
                 Uri startUri = new Uri(url);
                 // When using the desktop flow, the success code is displayed in the html title of this end uri

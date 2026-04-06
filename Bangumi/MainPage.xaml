@@ -1,136 +1,575 @@
-﻿<Page
+<Page
     x:Class="Bangumi.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Bangumi"
-    xmlns:local2="using:Bangumi.Controls.TitleBar"
-    xmlns:local3="using:Bangumi.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:common="using:Bangumi.Common"
+    xmlns:local3="using:Bangumi.Controls"
     mc:Ignorable="d"
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
-    Loading="Page_Loading"
-    Background="{ThemeResource SystemChromeLowColor}">
+    Background="{StaticResource ShellWindowBrush}">
 
-    <Grid>
+    <Page.Resources>
+        <SolidColorBrush x:Key="ShellAccentBrush" Color="#F091B2"/>
+        <LinearGradientBrush x:Key="ShellMainGradientBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="{StaticResource ShellMainTopColor}" Offset="0"/>
+            <GradientStop Color="{StaticResource ShellMainMidColor}" Offset="0.42"/>
+            <GradientStop Color="{StaticResource ShellMainBottomColor}" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ShellTitleShadowBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="{StaticResource ShellTitleShadowStartColor}" Offset="0"/>
+            <GradientStop Color="{StaticResource ShellTitleShadowEndColor}" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ShellContentLeftShadowBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="{StaticResource ShellContentShadowStartColor}" Offset="0"/>
+            <GradientStop Color="{StaticResource ShellContentShadowMidColor}" Offset="0.45"/>
+            <GradientStop Color="{StaticResource ShellContentShadowEndColor}" Offset="1"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="SidebarHoverBrush" Color="#07FFFFFF"/>
+        <LinearGradientBrush x:Key="SidebarSelectedBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#28FFFFFF" Offset="0"/>
+            <GradientStop Color="#16FFFFFF" Offset="0.38"/>
+            <GradientStop Color="#08000000" Offset="0.72"/>
+            <GradientStop Color="#28000000" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SidebarSelectedCompactBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#24FFFFFF" Offset="0"/>
+            <GradientStop Color="#14FFFFFF" Offset="0.34"/>
+            <GradientStop Color="#0C000000" Offset="0.72"/>
+            <GradientStop Color="#30000000" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SidebarIndicatorBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FFF091B2" Offset="0"/>
+            <GradientStop Color="#FFF7B4CB" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="SidebarInsetDividerBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#22000000" Offset="0"/>
+            <GradientStop Color="#14FFFFFF" Offset="0.45"/>
+            <GradientStop Color="#18000000" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Foreground" Value="{StaticResource ShellPrimaryTextBrush}"/>
+        </Style>
+
+        <Style x:Key="ShellSearchBoxStyle" TargetType="AutoSuggestBox">
+            <Setter Property="Foreground" Value="{StaticResource ShellPrimaryTextBrush}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="{StaticResource ShellSurfaceRaisedBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ShellBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="8,0,8,0"/>
+            <Setter Property="UseSystemFocusVisuals" Value="False"/>
+        </Style>
+
+        <DataTemplate x:Key="SectionPivotHeaderTemplate">
+            <TextBlock Text="{Binding}"
+                       FontSize="14"
+                       FontWeight="Normal"
+                       VerticalAlignment="Bottom"/>
+        </DataTemplate>
+
+        <Style x:Key="SectionPivotHeaderItemStyle" TargetType="PivotHeaderItem">
+            <Setter Property="Padding" Value="0,0,20,4"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="MinWidth" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="SectionPivotItemStyle" TargetType="PivotItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="SidebarSectionHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="18,12,0,10"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource ShellSecondaryTextBrush}"/>
+        </Style>
+
+        <Style x:Key="SidebarItemTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+
+        <Style x:Key="SidebarNavButtonStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Foreground" Value="{StaticResource ShellPrimaryTextBrush}"/>
+            <Setter Property="Margin" Value="0,1,0,1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonRoot"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="ButtonRoot.Background" Value="{StaticResource ShellPaneSelectedBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="ButtonRoot.Opacity" Value="0.45"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid x:Name="RootLayout"
+          Background="{StaticResource ShellWindowBrush}"
+          SizeChanged="RootLayout_SizeChanged">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <local2:TitleBarEx x:Name="TitleBar" 
-                           Text="Bangumi 番组计划"
-                           IsBackEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                           ImageVisibility="{x:Bind common:Converters.CollapsedIf(CanGoBack), Mode=OneWay}"/>
+        <Grid x:Name="AppTitleBar"
+              Grid.Row="0"
+              Margin="0,-1,0,0"
+              Background="{StaticResource ShellTitleBarBrush}"
+              Canvas.ZIndex="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="172"/>
+            </Grid.ColumnDefinitions>
 
-        <NavigationView x:Name="NavView"
-                        Grid.Row="1"
-                        PaneDisplayMode="Top" 
-                        IsSettingsVisible="False"
-                        IsBackButtonVisible="Collapsed"
-                        ItemInvoked="NavView_ItemInvoked">
-            <NavigationView.MenuItems>
-                <NavigationViewItem Tag="progress" Content="进度" />
-                <NavigationViewItem Tag="collection" Content="收藏" />
-                <NavigationViewItem Tag="calendar" Content="时间表" />
-                <NavigationViewItemSeparator Visibility="{x:Bind PlaceholderItem.Visibility, Mode=OneWay}"/>
-                <NavigationViewItem x:Name="PlaceholderItem" 
-                                    Tag="others" />
-            </NavigationView.MenuItems>
-            <NavigationView.PaneFooter>
-                <StackPanel Orientation="Horizontal" TabFocusNavigation="Once">
-                    <AppBarButton x:Name="NetworkErrorButton" 
-                                  Width="48" 
-                                  Visibility="{x:Bind IsOffline, Mode=OneWay}"
-                                  ToolTipService.ToolTip="网络异常">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7BA;" />
-                    </AppBarButton>
-                    <AppBarButton x:Name="RefreshButton" 
-                                  Width="48" 
-                                  Visibility="{x:Bind IsRefreshable, Mode=OneWay}"
-                                  IsEnabled="{x:Bind common:Converters.Not(IsLoading), Mode=OneWay}"
-                                  ToolTipService.ToolTip="刷新 (F5)" >
-                        <AppBarButton.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="None" Key="F5"/>
-                            <KeyboardAccelerator Modifiers="Control" Key="R"/>
-                        </AppBarButton.KeyboardAccelerators>
-                        <Grid>
-                            <ProgressRing Visibility="{x:Bind IsLoading, Mode=OneWay}"
-                                          IsActive="{x:Bind IsLoading, Mode=OneWay}"
-                                          Margin="-2"/>
-                            <IconSourceElement Visibility="{x:Bind common:Converters.CollapsedIf(IsLoading), Mode=OneWay}">
-                                <SymbolIconSource Symbol="Refresh"/>
-                            </IconSourceElement>
-                        </Grid>
-                    </AppBarButton>
-                    <AppBarButton x:Name="SearchButton" 
-                                  Width="48" 
-                                  Icon="Find" 
-                                  ToolTipService.ToolTip="搜索 (Ctrl+Q)">
-                        <AppBarButton.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="Control" Key="Q"/>
-                        </AppBarButton.KeyboardAccelerators>
-                    </AppBarButton>
-                    <AppBarButton x:Name="LoginButton"
-                                  Width="48"
-                                  Click="LoginButton_Click">
-                        <Grid Padding="-8">
-                            <ProgressRing Height="40" Width="40"
-                                          Visibility="Visible"
-                                          IsActive="True"/>
-                            <Ellipse VerticalAlignment="Center" Height="48" Width="48">
-                                <Ellipse.Fill>
-                                    <ImageBrush x:Name="AvaterImage" Stretch="UniformToFill"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                        </Grid>
-                    </AppBarButton>
-                    <AppBarButton x:Name="SettingButton"
-                                  Width="48" 
-                                  Icon="Setting" 
-                                  ToolTipService.ToolTip="设置">
-                    </AppBarButton>
-                </StackPanel>
-            </NavigationView.PaneFooter>
-            <Frame x:Name="ContentFrame"
-                   Navigated="ContentFrame_Navigated"/>
-        </NavigationView>
+            <Rectangle x:Name="TitleBarDragRegion"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Fill="Transparent"/>
 
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Button x:Name="BackButton"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="Collapsed">
+                    <SymbolIcon Symbol="Back"/>
+                </Button>
+                <Button x:Name="MenuButton"
+                        Width="56"
+                        Height="48"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Click="MenuButton_Click"
+                        ToolTipService.ToolTip="菜单"
+                        Visibility="Collapsed">
+                    <SymbolIcon Symbol="GlobalNavigationButton"
+                                Width="18"
+                                Height="18"/>
+                </Button>
+            </StackPanel>
+
+            <StackPanel x:Name="AppNameBlock"
+                        Grid.Column="1"
+                        Margin="8,0,18,0"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        VerticalAlignment="Center"
+                        IsHitTestVisible="False">
+                <Image x:Name="AppIconImage"
+                       Source="ms-appx:///Assets/Shell/app-icon.png"
+                       Width="18"
+                       Height="18"/>
+                <TextBlock x:Name="AppNameText"
+                           Text="Bangumi"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource ShellPrimaryTextBrush}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Grid x:Name="SearchHost"
+                  Grid.Column="2"
+                  Width="400"
+                  MaxWidth="480"
+                  Margin="0,4,0,4"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                <AutoSuggestBox x:Name="GlobalSearchBox"
+                                Style="{StaticResource ShellSearchBoxStyle}"
+                                Height="32"
+                                PlaceholderText="搜索条目"
+                                QueryIcon="Find"
+                                QuerySubmitted="GlobalSearchBox_QuerySubmitted"/>
+            </Grid>
+
+            <StackPanel Grid.Column="3"
+                        Margin="0,0,8,0"
+                        Orientation="Horizontal"
+                        Spacing="10"
+                        VerticalAlignment="Center">
+                <Button x:Name="SearchTriggerButton"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Click="SearchTriggerButton_Click"
+                        ToolTipService.ToolTip="搜索"
+                        Visibility="Collapsed">
+                    <FontIcon Glyph="&#xE721;"
+                              FontFamily="Segoe MDL2 Assets"
+                              FontSize="15"/>
+                </Button>
+                <Button x:Name="PageRefreshButton"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Click="PageRefreshButton_Click"
+                        ToolTipService.ToolTip="刷新">
+                    <FontIcon Glyph="&#xE72C;"
+                              FontFamily="Segoe MDL2 Assets"
+                              FontSize="15"/>
+                </Button>
+                <Button x:Name="MessageButton"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        ToolTipService.ToolTip="消息">
+                    <FontIcon Glyph="&#xE715;"
+                              FontFamily="Segoe MDL2 Assets"
+                              FontSize="15"/>
+                </Button>
+                <Button x:Name="LoginButton"
+                        x:FieldModifier="public"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        Padding="0"
+                        Click="LoginButton_Click">
+                    <Ellipse Width="26"
+                             Height="26">
+                        <Ellipse.Fill>
+                            <ImageBrush x:Name="AvaterImage"
+                                        ImageSource="ms-appx:///Assets/Shell/avatar.png"
+                                        Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Button>
+            </StackPanel>
+
+            <Border Grid.ColumnSpan="5"
+                    Height="1"
+                    VerticalAlignment="Bottom"
+                    Background="Transparent"/>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Canvas.ZIndex="95"
+                Height="10"
+                VerticalAlignment="Top"
+                Background="{StaticResource ShellTitleShadowBrush}"
+                IsHitTestVisible="False"/>
+
+        <SplitView x:Name="RootSplitView"
+                   Grid.Row="1"
+                   OpenPaneLength="212"
+                   CompactPaneLength="56"
+                   DisplayMode="Inline"
+                   IsPaneOpen="True"
+                   PaneBackground="{StaticResource ShellPaneBrush}">
+            <SplitView.Pane>
+                <Grid x:Name="SidebarPaneRoot" Background="{StaticResource ShellPaneBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel x:Name="PaneSearchHost"
+                                Margin="8,12,8,4"
+                                Visibility="Collapsed">
+                        <AutoSuggestBox x:Name="PaneSearchBox"
+                                        Style="{StaticResource ShellSearchBoxStyle}"
+                                        Height="32"
+                                        PlaceholderText="搜索条目"
+                                        QueryIcon="Find"
+                                        QuerySubmitted="GlobalSearchBox_QuerySubmitted"/>
+                    </StackPanel>
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="SidebarButtonHost"
+                                    Padding="0,8,0,0">
+                            <TextBlock Text="导航"
+                                       Style="{StaticResource SidebarSectionHeaderStyle}"/>
+
+                            <Button Tag="home" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4"/>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Home" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="发现" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="timeline" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Clock" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="时间线" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="collection" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Favorite" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="收藏" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="discover" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Find" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="搜索" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="rakuen" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Library" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="超展开" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="group" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="People" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="小组" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="messages" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Message" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="消息" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                            <Button Tag="profile" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon x:Name="ProfileNavAvatarIcon" Grid.Column="1" Symbol="Contact" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="我的" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+
+                            <Border Margin="0,8,0,0" Height="1" Background="{StaticResource SidebarInsetDividerBrush}"/>
+                            <TextBlock Text="专题" Style="{StaticResource SidebarSectionHeaderStyle}"/>
+                            <Button Tag="tinygrail" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                                <Grid Padding="0,0,20,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                    <SymbolIcon Grid.Column="1" Symbol="Shop" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="小圣杯" Style="{StaticResource SidebarItemTextStyle}"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <StackPanel x:Name="SidebarFooterHost"
+                                Grid.Row="2"
+                                Margin="0,0,0,8">
+                        <Border Height="1" Background="{StaticResource SidebarInsetDividerBrush}"/>
+                        <Button Tag="toolbox" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                            <Grid Padding="0,0,20,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                <SymbolIcon Grid.Column="1" Symbol="AllApps" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="工具箱" Style="{StaticResource SidebarItemTextStyle}"/>
+                            </Grid>
+                        </Button>
+                        <Button Tag="settings" Click="SidebarNavButton_Click" Style="{StaticResource SidebarNavButtonStyle}">
+                            <Grid Padding="0,0,20,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="4"/><ColumnDefinition Width="48"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                <Border Background="{StaticResource SidebarIndicatorBrush}" Opacity="0" Margin="0,4,0,4"/>
+                                <SymbolIcon Grid.Column="1" Symbol="Setting" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="设置" Style="{StaticResource SidebarItemTextStyle}"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid x:Name="MainGrid"
+                      Background="Transparent">
+                    <Border Background="{StaticResource ShellMainBottomBrush}"/>
+                    <Border x:Name="HeaderBackground"
+                            Height="112"
+                            VerticalAlignment="Top"
+                            Background="{StaticResource ShellMainGradientBrush}"/>
+
+                    <Border Width="14"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource ShellContentLeftShadowBrush}"
+                            IsHitTestVisible="False"/>
+
+                    <Grid x:Name="HeaderHost"
+                          Margin="20,0,0,0">
+                        <Grid.RenderTransform>
+                            <TranslateTransform x:Name="HeaderHostTransform"/>
+                        </Grid.RenderTransform>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid x:Name="SectionHeaderGrid"
+                              Height="62"
+                              Margin="0,0,0,10"
+                              VerticalAlignment="Top">
+                            <Grid.RenderTransform>
+                                <TranslateTransform x:Name="SectionTitleTransform"/>
+                            </Grid.RenderTransform>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="SectionTitleText"
+                                       Margin="0,18,0,0"
+                                       FontSize="34"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource ShellPrimaryTextBrush}"
+                                       VerticalAlignment="Top"/>
+                            <StackPanel x:Name="HomeHeaderActions"
+                                        Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        Spacing="10"
+                                        VerticalAlignment="Top"
+                                        Visibility="Collapsed">
+                                <Button x:Name="HomeTimelineButton"
+                                        Width="56"
+                                        Height="56"
+                                        Margin="0,6,0,0"
+                                        Click="HomeTimelineButton_Click"
+                                        Background="#1AFFFFFF"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="28"
+                                        ToolTipService.ToolTip="时间线">
+                                    <FontIcon Glyph="&#xE823;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              FontSize="21"
+                                              Foreground="{StaticResource ShellPrimaryTextBrush}"/>
+                                </Button>
+                                <Button x:Name="HomeCollectionButton"
+                                        Width="56"
+                                        Height="56"
+                                        Margin="0,6,0,0"
+                                        Click="HomeCollectionButton_Click"
+                                        Background="#1AFFFFFF"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="28"
+                                        ToolTipService.ToolTip="收藏">
+                                    <FontIcon Glyph="&#xE00B;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              FontSize="21"
+                                              Foreground="{StaticResource ShellPrimaryTextBrush}"/>
+                                </Button>
+                                <Button x:Name="HomeSearchButton"
+                                        Width="56"
+                                        Height="56"
+                                        Margin="0,6,0,0"
+                                        Click="HomeSearchButton_Click"
+                                        Background="#1AFFFFFF"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="28"
+                                        ToolTipService.ToolTip="搜索">
+                                    <FontIcon Glyph="&#xE721;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              FontSize="21"
+                                              Foreground="{StaticResource ShellPrimaryTextBrush}"/>
+                                </Button>
+                                <Button x:Name="HomeRefreshButton"
+                                        Width="56"
+                                        Height="56"
+                                        Margin="0,6,0,0"
+                                        Click="HomeRefreshButton_Click"
+                                        Background="#1AFFFFFF"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="28"
+                                        ToolTipService.ToolTip="刷新">
+                                    <FontIcon Glyph="&#xE72C;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              FontSize="21"
+                                              Foreground="{StaticResource ShellPrimaryTextBrush}"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Frame x:Name="HomeContentFrame"
+                                   Visibility="Collapsed"
+                                   Background="Transparent"/>
+                            <Pivot x:Name="SectionTabList"
+                                   Margin="0,0,0,0"
+                                   Padding="0"
+                                   Background="Transparent"
+                                   HeaderTemplate="{StaticResource SectionPivotHeaderTemplate}"
+                                   SelectionChanged="SectionTabList_SelectionChanged">
+                                <Pivot.Resources>
+                                    <Style BasedOn="{StaticResource SectionPivotHeaderItemStyle}" TargetType="PivotHeaderItem"/>
+                                    <Style BasedOn="{StaticResource SectionPivotItemStyle}" TargetType="PivotItem"/>
+                                </Pivot.Resources>
+                            </Pivot>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
 
         <local3:InAppNotification x:Name="NotifyControl"
                                   x:FieldModifier="public"
                                   Grid.Row="1"/>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="NetworkErrorButton.Width" Value="36"/>
-                        <Setter Target="RefreshButton.Width" Value="36"/>
-                        <Setter Target="SearchButton.Width" Value="36"/>
-                        <Setter Target="LoginButton.Width" Value="36"/>
-                        <Setter Target="SettingButton.Width" Value="36"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="500"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="NetworkErrorButton.Width" Value="48"/>
-                        <Setter Target="RefreshButton.Width" Value="48"/>
-                        <Setter Target="SearchButton.Width" Value="48"/>
-                        <Setter Target="LoginButton.Width" Value="48"/>
-                        <Setter Target="SettingButton.Width" Value="48"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
-
 </Page>

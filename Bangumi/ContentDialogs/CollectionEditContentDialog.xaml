@@ -24,7 +24,7 @@
 
     <Grid>
         <StackPanel MaxWidth="300">
-            <Grid Name="StatusPanel" CornerRadius="5" Background="{ThemeResource SystemChromeMediumHighColor}">
+            <Grid Name="StatusPanel" CornerRadius="0" Background="{ThemeResource SystemChromeMediumHighColor}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -39,7 +39,7 @@
                              Content="想看" 
                              Tag="wish" 
                              HorizontalAlignment="Stretch"
-                             CornerRadius="5"
+                             CornerRadius="0"
                              GroupName="CollectionStatus" 
                              Checked="StatusRadioButton_Checked"/>
                 <RadioButton Name="CollectRadio" 
@@ -49,7 +49,7 @@
                              Content="看过" 
                              Tag="collect" 
                              HorizontalAlignment="Stretch"
-                             CornerRadius="5"
+                             CornerRadius="0"
                              GroupName="CollectionStatus" 
                              Checked="StatusRadioButton_Checked"/>
                 <RadioButton Name="DoRadio" 
@@ -59,7 +59,7 @@
                              Content="在看" 
                              Tag="do" 
                              HorizontalAlignment="Stretch"
-                             CornerRadius="5"
+                             CornerRadius="0"
                              GroupName="CollectionStatus" 
                              Checked="StatusRadioButton_Checked"/>
                 <RadioButton Name="OnHoldRadio" 
@@ -69,7 +69,7 @@
                              Content="搁置" 
                              Tag="on_hold" 
                              HorizontalAlignment="Stretch"
-                             CornerRadius="5"
+                             CornerRadius="0"
                              GroupName="CollectionStatus" 
                              Checked="StatusRadioButton_Checked"/>
                 <RadioButton Name="DroppedRadio" 
@@ -79,7 +79,7 @@
                              Content="抛弃" 
                              Tag="dropped" 
                              HorizontalAlignment="Stretch"
-                             CornerRadius="5"
+                             CornerRadius="0"
                              GroupName="CollectionStatus" 
                              Checked="StatusRadioButton_Checked"/>
             </Grid>

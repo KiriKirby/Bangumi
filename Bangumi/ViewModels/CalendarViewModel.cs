@@ -85,7 +85,7 @@ namespace Bangumi.ViewModels
             try
             {
                 IsLoading = true;
-                var calendar = await BangumiApi.BgmApi.Calendar();
+                var calendar = await BangumiApi.BgmApi.Calendar() ?? new List<Calendar>();
                 if (BangumiApi.BgmOAuth.IsLogin)
                 {
                     await BangumiApi.BgmApi.Status(calendar.SelectMany(t => t.Items.Select(s => s.Id.ToString())));
@@ -110,7 +110,7 @@ namespace Bangumi.ViewModels
 
         public void PopulateCalendarFromCache()
         {
-            var cache = BangumiApi.BgmCache.Calendar();
+            var cache = BangumiApi.BgmCache.Calendar() ?? new List<Calendar>();
             ProgressStatus(cache);
             if (!cache.SequenceEqualExT(CalendarCollection.OrderBy(b => b.Weekday.Id).ToList()))
             {
@@ -123,8 +123,18 @@ namespace Bangumi.ViewModels
         /// </summary>
         private void ProgressStatus(List<Calendar> calendars)
         {
+            if (calendars == null)
+            {
+                return;
+            }
+
             foreach (var item in calendars)
             {
+                if (item?.Items == null)
+                {
+                    continue;
+                }
+
                 foreach (var subject in item.Items)
                 {
                     subject.Status = BangumiApi.BgmCache.Status(subject.Id.ToString())?.Status?.Id;
@@ -137,10 +147,15 @@ namespace Bangumi.ViewModels
         /// </summary>
         private void ProcessTimeLine(List<Calendar> timeLines)
         {
+            if (timeLines == null)
+            {
+                return;
+            }
+
             int day = GetDayOfWeek();
             //清空原数据
             CalendarCollection.Clear();
-            foreach (var item in timeLines)
+            foreach (var item in timeLines.Where(it => it?.Weekday != null))
             {
                 if (item.Weekday.Id < day)
                 {

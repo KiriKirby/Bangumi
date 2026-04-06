@@ -93,7 +93,7 @@
                                   Source="{x:Bind ViewModel.ImageSource, Mode=OneWay}"
                                   PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                   PlaceholderStretch="UniformToFill"
-                                  CornerRadius="2"
+                                  CornerRadius="0"
                                   RelativePanel.AlignLeftWithPanel="True"
                                   RelativePanel.AlignTopWithPanel="True"
                                   Margin="0,0,5,0"

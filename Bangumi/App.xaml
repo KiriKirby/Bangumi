@@ -6,9 +6,74 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" ControlsResourcesVersion="Version1"/>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" ControlsResourcesVersion="Version2"/>
                 <ResourceDictionary Source="ms-appx:///Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+            <CornerRadius x:Key="OverlayCornerRadius">0</CornerRadius>
+
+            <Color x:Key="ShellWindowColor">#151014</Color>
+            <Color x:Key="ShellChromeColor">#33252D</Color>
+            <Color x:Key="ShellPaneColor">#21171C</Color>
+            <Color x:Key="ShellMainTopColor">#2D2026</Color>
+            <Color x:Key="ShellMainMidColor">#24191F</Color>
+            <Color x:Key="ShellMainBottomColor">#171115</Color>
+            <Color x:Key="ShellSurfaceColor">#2F2229</Color>
+            <Color x:Key="ShellSurfaceRaisedColor">#392A32</Color>
+            <Color x:Key="ShellSurfacePressedColor">#1B1317</Color>
+            <Color x:Key="ShellPaneHoverColor">#18FFFFFF</Color>
+            <Color x:Key="ShellPaneSelectedColor">#20FFFFFF</Color>
+            <Color x:Key="ShellBorderColor">#30FFFFFF</Color>
+            <Color x:Key="ShellPrimaryTextColor">#FFF8F4F6</Color>
+            <Color x:Key="ShellSecondaryTextColor">#AEF8F4F6</Color>
+            <Color x:Key="ShellTopBorderColor">#45FFFFFF</Color>
+            <Color x:Key="ShellTitleShadowStartColor">#78000000</Color>
+            <Color x:Key="ShellTitleShadowEndColor">#00000000</Color>
+            <Color x:Key="ShellContentShadowStartColor">#94000000</Color>
+            <Color x:Key="ShellContentShadowMidColor">#32000000</Color>
+            <Color x:Key="ShellContentShadowEndColor">#00000000</Color>
+
+            <SolidColorBrush x:Key="ShellWindowBrush" Color="{StaticResource ShellWindowColor}"/>
+            <SolidColorBrush x:Key="ShellChromeBrush" Color="{StaticResource ShellChromeColor}"/>
+            <SolidColorBrush x:Key="ShellTitleBarBrush" Color="{StaticResource ShellChromeColor}"/>
+            <SolidColorBrush x:Key="ShellPaneBrush" Color="{StaticResource ShellPaneColor}"/>
+            <SolidColorBrush x:Key="ShellMainTopBrush" Color="{StaticResource ShellMainTopColor}"/>
+            <SolidColorBrush x:Key="ShellMainMidBrush" Color="{StaticResource ShellMainMidColor}"/>
+            <SolidColorBrush x:Key="ShellMainBottomBrush" Color="{StaticResource ShellMainBottomColor}"/>
+            <SolidColorBrush x:Key="ShellSurfaceBrush" Color="{StaticResource ShellSurfaceColor}"/>
+            <SolidColorBrush x:Key="ShellSurfaceRaisedBrush" Color="{StaticResource ShellSurfaceRaisedColor}"/>
+            <SolidColorBrush x:Key="ShellSurfacePressedBrush" Color="{StaticResource ShellSurfacePressedColor}"/>
+            <SolidColorBrush x:Key="ShellPaneHoverBrush" Color="{StaticResource ShellPaneHoverColor}"/>
+            <SolidColorBrush x:Key="ShellPaneSelectedBrush" Color="{StaticResource ShellPaneSelectedColor}"/>
+            <SolidColorBrush x:Key="ShellBorderBrush" Color="{StaticResource ShellBorderColor}"/>
+            <SolidColorBrush x:Key="ShellPrimaryTextBrush" Color="{StaticResource ShellPrimaryTextColor}"/>
+            <SolidColorBrush x:Key="ShellSecondaryTextBrush" Color="{StaticResource ShellSecondaryTextColor}"/>
+            <SolidColorBrush x:Key="ShellTopBorderBrush" Color="{StaticResource ShellTopBorderColor}"/>
+            <SolidColorBrush x:Key="ShellAccentBrush" Color="#F091B2"/>
+
+            <Color x:Key="SystemAccentColor">#F091B2</Color>
+            <Color x:Key="SystemAccentColorLight1">#F6A5C0</Color>
+            <Color x:Key="SystemAccentColorLight2">#F9B8CD</Color>
+            <Color x:Key="SystemAccentColorLight3">#FBC9D8</Color>
+            <Color x:Key="SystemAccentColorDark1">#C87090</Color>
+            <Color x:Key="SystemAccentColorDark2">#9E526C</Color>
+            <Color x:Key="SystemAccentColorDark3">#6F384A</Color>
+            <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="SystemControlForegroundAccentBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush" Color="#F6A5C0"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush" Color="#33F091B2"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="#66F091B2"/>
+            <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="#99F091B2"/>
+            <SolidColorBrush x:Key="SystemControlHighlightChromeAccentBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="SystemControlHighlightAccent3RevealBackgroundBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#F091B2"/>
+            <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#F6A5C0"/>
+            <SolidColorBrush x:Key="TextControlSelectionHighlightColorThemeBrush" Color="#66F091B2"/>
+            <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#66F091B2"/>
+            <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="AccentFillColorDefaultBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="FocusVisualPrimaryBrush" Color="#F091B2"/>
+            <SolidColorBrush x:Key="FocusVisualSecondaryBrush" Color="#40F091B2"/>
         </ResourceDictionary>
     </Application.Resources>
 

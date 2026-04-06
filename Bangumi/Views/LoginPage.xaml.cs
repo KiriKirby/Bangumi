@@ -38,7 +38,8 @@ namespace Bangumi.Views
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             // Launch the URI
-            string url = $"{BgmOAuth.OAuthHOST}/authorize?client_id={BangumiApi.BgmOAuth.ClientId}&response_type=code";
+            string redirectUri = Uri.EscapeDataString(BangumiApi.BgmOAuth.RedirectUrl);
+            string url = $"{BgmOAuth.OAuthHOST}/authorize?client_id={BangumiApi.BgmOAuth.ClientId}&response_type=code&redirect_uri={redirectUri}";
             var loginUri = new Uri(url);
             await Launcher.LaunchUriAsync(loginUri);
         }

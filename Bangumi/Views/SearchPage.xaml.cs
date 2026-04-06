@@ -11,6 +11,7 @@ using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -25,6 +26,7 @@ namespace Bangumi.Views
     {
         public SearchViewModel ViewModel { get; } = new SearchViewModel(DispatcherQueue.GetForCurrentThread());
         private readonly Timer delayTimer;
+        private bool _isEmbeddedCategoryPage;
 
         public SearchPage()
         {
@@ -37,7 +39,37 @@ namespace Bangumi.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            (((Frame.Parent as NavigationView)?.Parent as Grid).Parent as MainPage)?.SelectPlaceholderItem("搜索");
+            var current = Frame?.Parent as DependencyObject;
+            while (current != null && !(current is MainPage))
+            {
+                current = VisualTreeHelper.GetParent(current);
+            }
+
+            if (current is MainPage mainPage)
+            {
+                mainPage.SelectPlaceholderItem("搜索");
+            }
+
+            if (e.Parameter is int selectedIndex)
+            {
+                _isEmbeddedCategoryPage = true;
+                ViewModel.SelectedIndex = selectedIndex;
+                if (TypePivot != null)
+                {
+                    TypePivot.SelectedIndex = selectedIndex;
+                    TypePivot.ItemContainerStyle = Resources["EmbeddedPivotHeaderItemStyle"] as Style;
+                    TypePivot.Margin = new Thickness(0, -6, 0, 0);
+                }
+            }
+            else
+            {
+                _isEmbeddedCategoryPage = false;
+                if (TypePivot != null)
+                {
+                    TypePivot.ItemContainerStyle = null;
+                    TypePivot.Margin = new Thickness(0);
+                }
+            }
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -92,6 +124,12 @@ namespace Bangumi.Views
 
         private void TypePivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_isEmbeddedCategoryPage)
+            {
+                ViewModel.SelectedIndex = TypePivot.SelectedIndex;
+                return;
+            }
+
             if (!ViewModel.CheckIfSearched())
             {
                 ViewModel.Suggestions.Clear();

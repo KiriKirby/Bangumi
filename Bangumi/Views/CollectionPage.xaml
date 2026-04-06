@@ -12,7 +12,7 @@
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemChromeLowColor}">
+    Background="Transparent">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -43,7 +43,7 @@
 
             <DataTemplate x:Key="ZoomedInTemplate" x:DataType="data:SubjectBaseE">
                 <UserControl>
-                    <RelativePanel Padding="5"
+                    <RelativePanel Padding="0"
                                    Holding="ItemRelativePanel_Holding"
                                    Background="Transparent">
                         <VisualStateManager.VisualStateGroups>
@@ -81,7 +81,7 @@
                                           Source="{x:Bind Subject.Images.Common}" 
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
                                           x:Phase="2"
@@ -154,7 +154,7 @@
             <SemanticZoom.ZoomedInView>
                 <controls:AdaptiveGridView x:Name="MyGridView" 
                                            ItemsSource="{x:Bind cvsGroups.View}" 
-                                           Padding="12,0,12,8"
+                                           Padding="0"
                                            ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                                            ShowsScrollingPlaceholders="False"
                                            SelectionMode="None"
@@ -176,7 +176,7 @@
 
             <SemanticZoom.ZoomedOutView>
                 <ListView ItemsSource="{x:Bind cvsGroups.View.CollectionGroups}"
-                          Padding="12,0,12,52"
+                          Padding="0"
                           SelectionMode="None"
                           IsItemClickEnabled="True" 
                           ScrollViewer.IsHorizontalScrollChainingEnabled="False"
@@ -188,7 +188,7 @@
         <ComboBox Name="TypeCombobox" 
                   HorizontalAlignment="Right"
                   SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
-                  Margin="0,4,16,0"
+                  Margin="0"
                   IsEnabled="{x:Bind common:Converters.Not(ViewModel.IsLoading), Mode=OneWay}"
                   TabIndex="-1">
             <ComboBoxItem Content="动画"/>

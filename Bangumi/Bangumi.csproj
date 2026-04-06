@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{4DECE7B1-AADA-427F-8A7C-22F73515973A}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxBundlePlatforms>x86|x64|arm|arm64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
     <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AppxBundle>Never</AppxBundle>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -101,6 +104,9 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AppxBundle>Never</AppxBundle>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <UapAppxPackageBuildMode>SideloadOnly</UapAppxPackageBuildMode>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -154,6 +160,9 @@
     <Compile Include="Controls\RateTemplateDictionary.xaml.cs">
       <DependentUpon>RateTemplateDictionary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MarqueeTextBlock.xaml.cs">
+      <DependentUpon>MarqueeTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\CollectionHelper.cs" />
     <Compile Include="Helper\EncryptionHelper.cs" />
     <Compile Include="Helper\FileSizeHelper.cs" />
@@ -182,6 +191,9 @@
     <Compile Include="Views\EpisodePage.xaml.cs">
       <DependentUpon>EpisodePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IPageStatus.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -191,6 +203,9 @@
     </Compile>
     <Compile Include="Views\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShellPlaceholderPage.xaml.cs">
+      <DependentUpon>ShellPlaceholderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -216,6 +231,19 @@
     <Content Include="Assets\resource\err_401.png" />
     <Content Include="Assets\resource\err_404.png" />
     <Content Include="Assets\resource\welcome.png" />
+    <Content Include="Assets\Shell\app-icon.png" />
+    <Content Include="Assets\Shell\avatar.png" />
+    <Content Include="Assets\Shell\nav-collection.png" />
+    <Content Include="Assets\Shell\nav-discover.png" />
+    <Content Include="Assets\Shell\nav-group.png" />
+    <Content Include="Assets\Shell\nav-home.png" />
+    <Content Include="Assets\Shell\nav-messages.png" />
+    <Content Include="Assets\Shell\nav-profile.png" />
+    <Content Include="Assets\Shell\nav-rakuen.png" />
+    <Content Include="Assets\Shell\nav-settings.png" />
+    <Content Include="Assets\Shell\nav-timeline.png" />
+    <Content Include="Assets\Shell\nav-tinygrail.png" />
+    <Content Include="Assets\Shell\nav-toolbox.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -297,6 +325,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MarqueeTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TitleBar\TitleBarDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -321,6 +353,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -334,6 +370,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShellPlaceholderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

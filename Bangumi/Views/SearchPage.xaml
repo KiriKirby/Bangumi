@@ -11,10 +11,20 @@
     Loaded="Page_Loaded"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemChromeLowColor}">
+    Background="{StaticResource ShellMainBottomBrush}">
 
     <Page.Resources>
         <ResourceDictionary>
+            <Style x:Key="EmbeddedPivotHeaderItemStyle" TargetType="PivotHeaderItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Height" Value="0"/>
+                <Setter Property="MinHeight" Value="0"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Opacity" Value="0"/>
+                <Setter Property="IsHitTestVisible" Value="False"/>
+            </Style>
+
             <MenuFlyout x:Name="CollectionMenuFlyout">
                 <MenuFlyoutItem Name="WishMenuFlyoutItem"
                                 Click="UpdateCollectionStatusMenuFlyoutItem_Click" 
@@ -56,7 +66,7 @@
                                         <Setter Target="TitleTextBlock.FontSize" Value="16"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="12"/>
                                         <Setter Target="TypeTextBlock.FontSize" Value="12"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="7.5"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="12"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="5,0"/>
                                     </VisualState.Setters>
@@ -72,7 +82,7 @@
                                         <Setter Target="TitleTextBlock.FontSize" Value="20"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="16"/>
                                         <Setter Target="TypeTextBlock.FontSize" Value="16"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="10"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="16"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="6,0"/>
                                     </VisualState.Setters>
@@ -85,7 +95,7 @@
                                           Source="{x:Bind Images.Common}" 
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
                                           x:Phase="2"
@@ -145,7 +155,7 @@
                                         <Setter Target="BangumiImage.Margin" Value="0,0,6,0"/>
                                         <Setter Target="TitleTextBlock.FontSize" Value="16"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="12"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="7.5"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="12"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="5,0"/>
                                     </VisualState.Setters>
@@ -160,7 +170,7 @@
                                         <Setter Target="BangumiImage.Margin" Value="0,0,10,0"/>
                                         <Setter Target="TitleTextBlock.FontSize" Value="20"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="16"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="10"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="16"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="6,0"/>
                                     </VisualState.Setters>
@@ -173,7 +183,7 @@
                                           Source="{x:Bind Images.Common}" 
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
                                           x:Phase="2"
@@ -256,7 +266,7 @@
                         ItemsSource="{x:Bind ViewModel.Suggestions}"
                         TextChanged="AutoSuggestBox_TextChanged"
                         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                        Margin="10,10,10,0" />
+                        Margin="0" />
 
         <Pivot Name="TypePivot" 
                SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
@@ -269,7 +279,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="AllGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"
@@ -307,7 +317,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="AnimeGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"
@@ -345,7 +355,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="BookGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"
@@ -383,7 +393,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="MusicGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"
@@ -421,7 +431,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="GameGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"
@@ -459,7 +469,7 @@
                     </TextBlock>
                 </PivotItem.Header>
                 <controls:AdaptiveGridView x:Name="RealGridView"
-                                           Padding="12,0"
+                                           Padding="0"
                                            IsItemClickEnabled="True" 
                                            ItemClick="GridView_ItemClick"
                                            RightTapped="GridView_RightTapped"

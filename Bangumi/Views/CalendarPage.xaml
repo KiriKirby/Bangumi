@@ -13,7 +13,7 @@
     Loaded="Page_Loaded"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemChromeLowColor}">
+    Background="Transparent">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -39,7 +39,7 @@
 
             <DataTemplate x:Key="ZoomedInTemplate" x:DataType="data:SubjectForCalendar">
                 <UserControl>
-                    <RelativePanel Padding="5"
+                    <RelativePanel Padding="0"
                                    Holding="RelativePanel_Holding"
                                    Background="Transparent">
                         <VisualStateManager.VisualStateGroups>
@@ -54,7 +54,7 @@
                                         <Setter Target="BangumiImage.Margin" Value="0,0,6,0"/>
                                         <Setter Target="TitleTextBlock.FontSize" Value="16"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="12"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="7.5"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="12"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="5,0"/>
                                         <Setter Target="RankTextBlock.FontSize" Value="12"/>
@@ -73,7 +73,7 @@
                                         <Setter Target="BangumiImage.Margin" Value="0,0,10,0"/>
                                         <Setter Target="TitleTextBlock.FontSize" Value="20"/>
                                         <Setter Target="SubtitleTextBlock.FontSize" Value="16"/>
-                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="10"/>
+                                        <Setter Target="CollectionStatusBorder.CornerRadius" Value="0"/>
                                         <Setter Target="CollectionStatusTextBlock.FontSize" Value="16"/>
                                         <Setter Target="CollectionStatusTextBlock.Margin" Value="6,0"/>
                                         <Setter Target="RankTextBlock.FontSize" Value="16"/>
@@ -91,7 +91,7 @@
                                           Source="{x:Bind Images.Common}"
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
                                           x:Phase="2"
@@ -199,7 +199,7 @@
             <SemanticZoom.ZoomedInView>
                 <controls:AdaptiveGridView x:Name="MyGridView"
                                            ItemsSource="{x:Bind cvsGroups.View}"
-                                           Padding="12,0,12,8"
+                                           Padding="0"
                                            ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                                            ShowsScrollingPlaceholders="False"
                                            IsItemClickEnabled="True"
@@ -220,7 +220,7 @@
 
             <SemanticZoom.ZoomedOutView>
                 <ListView ItemsSource="{x:Bind cvsGroups.View.CollectionGroups}"
-                          Padding="12,0,12,52"
+                          Padding="0"
                           SelectionMode="None"
                           IsItemClickEnabled="True"
                           ScrollViewer.IsHorizontalScrollChainingEnabled="False"

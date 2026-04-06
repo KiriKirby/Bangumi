@@ -7,6 +7,7 @@ using Bangumi.ViewModels;
 using Bangumi.Views;
 using Microsoft.QueryStringDotNET;
 using System;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -45,7 +46,19 @@ namespace Bangumi
             e.Handled = true;
             // 马上将缓存写入文件
             var task = BangumiApi.BgmCache.WriteToFile();
-            Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog($"发生未知错误，应用即将关闭！\n{e.Message}", "未知错误");
+            var exception = e.Exception;
+            var innermost = exception;
+            while (innermost?.InnerException != null)
+            {
+                innermost = innermost.InnerException;
+            }
+
+            string detail = innermost == null
+                ? e.Message
+                : $"{innermost.GetType().FullName}\n{innermost.Message}\n\n{innermost.StackTrace}";
+
+            Debug.WriteLine(detail);
+            Windows.UI.Popups.MessageDialog dialog = new Windows.UI.Popups.MessageDialog($"发生未知错误，应用即将关闭！\n{detail}", "未知错误");
             await dialog.ShowAsync();
             await task;
             Application.Current.Exit();

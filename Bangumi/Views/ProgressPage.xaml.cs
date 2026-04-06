@@ -56,7 +56,7 @@ namespace Bangumi.Views
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var selectedItem = (WatchProgress)e.ClickedItem;
-            this.Frame.Navigate(typeof(EpisodePage), selectedItem.SubjectId, new DrillInNavigationTransitionInfo());
+            MainPage.RootPage.Frame.Navigate(typeof(EpisodePage), selectedItem.SubjectId, new DrillInNavigationTransitionInfo());
         }
 
         /// <summary>

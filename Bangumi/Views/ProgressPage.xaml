@@ -12,7 +12,7 @@
     NavigationCacheMode="Enabled"
     Loaded="Page_Loaded"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemChromeLowColor}">
+    Background="Transparent">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -21,7 +21,7 @@
 
             <DataTemplate x:Key="ProgressSubjectTemplate" x:DataType="data:WatchProgress">
                 <UserControl>
-                    <RelativePanel Padding="5"
+                    <RelativePanel Padding="0"
                                    Holding="RelativePanel_Holding"
                                    Background="Transparent">
                         <VisualStateManager.VisualStateGroups>
@@ -78,7 +78,7 @@
                                           Source="{x:Bind Image}" 
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           x:Phase="2"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
@@ -178,7 +178,7 @@
 
             <DataTemplate x:Key="ProgressBookSubjectTemplate" x:DataType="data:WatchProgress">
                 <UserControl>
-                    <RelativePanel Padding="5"
+                    <RelativePanel Padding="0"
                                    Holding="RelativePanel_Holding"
                                    Background="Transparent">
                         <VisualStateManager.VisualStateGroups>
@@ -239,7 +239,7 @@
                                           Source="{x:Bind Image}" 
                                           PlaceholderSource="{x:Bind common:Constants.NotFoundImgUri}"
                                           PlaceholderStretch="UniformToFill"
-                                          CornerRadius="2"
+                                          CornerRadius="0"
                                           x:Phase="2"
                                           RelativePanel.AlignLeftWithPanel="True"
                                           RelativePanel.AlignTopWithPanel="True"
@@ -433,7 +433,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <controls:AdaptiveGridView x:Name="MyGridView" 
-                                   Padding="12,0,12,8"
+                                   Padding="0"
                                    DesiredWidth="360"
                                    ItemsSource="{x:Bind ViewModel.WatchingCollection}" 
                                    ShowsScrollingPlaceholders="False"
