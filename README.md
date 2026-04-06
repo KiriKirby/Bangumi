@@ -1,4 +1,8 @@
-﻿# Bangumi 番组计划
+# 项目临时发布，借用物以及许可类型还未完善展示，稍后将补全。
+ 
+ 
+ 
+ # Bangumi 番组计划
 
 一个使用 [Bangumi API](https://github.com/bangumi/api) 开发的 [Bangumi 番组计划](https://bgm.tv) 第三方 Win10 客户端。
 
