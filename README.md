@@ -1,9 +1,12 @@
 # 项目临时发布，借用物以及许可类型还未完善展示，稍后将补全。
 
 借用Bili.Uwp
+
 借用czy0729.Bangumi
 
- 
+ <img width="2160" height="1350" alt="image" src="https://github.com/user-attachments/assets/8101ed92-2db5-4ff7-bd08-8af0b85dd331" />
+
+太困了我先睡觉了，明天入学式
  
  
  # Bangumi 番组计划
